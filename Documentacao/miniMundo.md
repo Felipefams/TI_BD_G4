@@ -1,4 +1,4 @@
-#Descricao do miniMundo
+# Descricao do miniMundo
 Esta é a descrição textual de minimundo WriterHub.
 O WriterHub possui Usuarios, cada usuario possui N Documentos.
 Cada documento possui um user_id, um doc_id, um version_id e um link.
