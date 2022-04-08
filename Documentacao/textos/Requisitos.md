@@ -1,3 +1,5 @@
+# Requisitos Funcionais
+
 | Funcionalidades da página de Login | Funcionalidades da página do Usuário | Funcionalidades da página de Edição de Documento |
 | :--------------------------------: | :----------------------------------: | :----------------------------------------------: |
 |  Função “Criar Usuário (Sign up)”  |       Função “Criar Documento”       |              Função “Salvar Versão”              |
@@ -19,3 +21,8 @@
   - Função “Salvar Versão”: Uma função que será encarregada de gerar novas instâncias de versões para um documento. Ao criar uma nova versão, o texto que está no editor de texto será salvado nesta nova versão e tornara-se “Read-only” para evitar modificações em versões passadas.  
   -	Função “Abrir Versão”: Uma função simples que irá pegar a versão selecionada e abrir uma visualização de seu conteúdo, se a versão não for a atual para o documento em questão ela será “Read-only” e não será editável, e se ela for a atual do documento ela será editável e salvável.
   -	Função “Aviso sobre Fechar página”: Se um usuário tentar, propositalmente ou não, fechar a página do site, um pop-up deve aparecer avisando que se ele sair todas as modificações não salvas serão perdidas.
+  -	Correção Ortográfica do Editor de Texto: Aplicação de um API de correção ortográfica para que o usuário, ao escrever, automáticamente receba recomendações de para melhorar a escrita ou corrigir erros.
+
+# Requisitos Não-Funcionais
+
+  * Criptografia Unidirecional: Criptografia em que só da para criptografar, não é possível descriptografar com exemplos sendo crypt, MDS, SHA. Utilizaremos isto para salvar a senha do usuário de maneira segura e com menos risco de ser acessado pelo banco de dados. Para está criptografia funcionar, a senha deve ser criptografada na hora de comparação para verificar o login.
