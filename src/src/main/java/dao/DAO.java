@@ -2,7 +2,7 @@ package dao;
 
 
 import java.sql.*;
-
+/*Isso aqui ta pronto, nao precisa mexer nao, so na hora de fazer a conexao*/
 public class DAO{
     protected Connection conexao;
 
@@ -15,7 +15,7 @@ public class DAO{
         String serverName = "localhost";
         String mydatabase = "writerhub";
         int port = 5432;
-        String url = "jdbc:postgresql://" + serverName + ":" + porta +"/" + mydatabase;
+        String url = "jdbc:postgresql://" + serverName + ":" + port +"/" + mydatabase;
         String username = " ";
         String password = " ";
         boolean status = false;
@@ -45,15 +45,5 @@ public class DAO{
 			System.err.println(e.getMessage());
 		}
 		return status;
-	}
-
-
-
-
-
-
-    }
-
-
-
+	}  
 }
