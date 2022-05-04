@@ -23,16 +23,15 @@ public class VersionDAO extends DAO {
 		close();
 	}
 	
-	
-	public boolean insert(Version Version) {
+	public boolean insert(Version version) {
 		boolean status = false;
 		try {
-			String sql = "INSERT INTO Version (descricao, preco, quantidade, datafabricacao, datavalidade) "
-		               + "VALUES ('" + Version.getDescricao() + "', "
-		               + Version.getPreco() + ", " + Version.getQuantidade() + ", ?, ?);";
+			String sql = "INSERT INTO Version (documentID, versionID, creationDate, accessLink) "
+		               + "VALUES ('" + version.getDescricao() + "', "
+		               + version.getPreco() + ", " + version.getQuantidade() + ", ?, ?);";
 			PreparedStatement st = conexao.prepareStatement(sql);
-		    st.setTimestamp(1, Timestamp.valueOf(Version.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(Version.getDataValidade()));
+		    st.setTimestamp(1, Timestamp.valueOf(version.getDataFabricacao()));
+			st.setDate(2, Date.valueOf(version.getDataValidade()));
 			st.executeUpdate();
 			st.close();
 			status = true;
@@ -44,14 +43,14 @@ public class VersionDAO extends DAO {
 
 	
 	public Version get(int id) {
-		Version Version = null;
+		Version v = null;
 		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "SELECT * FROM Version WHERE id="+id;
-			ResultSet rs = st.executeQuery(sql);	
-	        if(rs.next()){            
-	        	 Version = new Version(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"), 
+			ResultSet rs = st.executeQuery(sql);
+	        if(rs.next()){
+	        	 v = new Version(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"), 
 	                				   rs.getInt("quantidade"), 
 	        			               rs.getTimestamp("datafabricacao").toLocalDateTime(),
 	        			               rs.getDate("datavalidade").toLocalDate());
@@ -60,7 +59,7 @@ public class VersionDAO extends DAO {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		return Version;
+		return v;
 	}
 	
 	
@@ -106,17 +105,17 @@ public class VersionDAO extends DAO {
 	}
 	
 	
-	public boolean update(Version Version) {
+	public boolean update(Version version) {
 		boolean status = false;
 		try {  
-			String sql = "UPDATE Version SET descricao = '" + Version.getDescricao() + "', "
-					   + "preco = " + Version.getPreco() + ", " 
-					   + "quantidade = " + Version.getQuantidade() + ","
+			String sql = "UPDATE Version SET descricao = '" + version.getDescricao() + "', "
+					   + "preco = " + version.getPreco() + ", " 
+					   + "quantidade = " + version.getQuantidade() + ","
 					   + "datafabricacao = ?, " 
-					   + "datavalidade = ? WHERE id = " + Version.getID();
+					   + "datavalidade = ? WHERE id = " + version.getID();
 			PreparedStatement st = conexao.prepareStatement(sql);
-		    st.setTimestamp(1, Timestamp.valueOf(Version.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(Version.getDataValidade()));
+		    st.setTimestamp(1, Timestamp.valueOf(version.getDataFabricacao()));
+			st.setDate(2, Date.valueOf(version.getDataValidade()));
 			st.executeUpdate();
 			st.close();
 			status = true;
