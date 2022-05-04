@@ -24,14 +24,14 @@ public class VersionDAO extends DAO {
 	}
 	
 	public boolean insert(Version version) {
+		//done
 		boolean status = false;
 		try {
 			String sql = "INSERT INTO Version (documentID, versionID, creationDate, accessLink) "
-		               + "VALUES ('" + version.getDescricao() + "', "
-		               + version.getPreco() + ", " + version.getQuantidade() + ", ?, ?);";
+		               + "VALUES ('" + version.getdocumentID() + "', "
+		               + version.getVersionID() + ", " + version.getCreationDate() + ");";//", ?, ?);";
 			PreparedStatement st = conexao.prepareStatement(sql);
-		    st.setTimestamp(1, Timestamp.valueOf(version.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(version.getDataValidade()));
+		    st.setTimestamp(1, Timestamp.valueOf(version.getCreationDate()));
 			st.executeUpdate();
 			st.close();
 			status = true;
@@ -44,16 +44,14 @@ public class VersionDAO extends DAO {
 	
 	public Version get(int id) {
 		Version v = null;
-		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM Version WHERE id="+id;
+			String sql = "SELECT * FROM Version WHERE versionID="+id;
 			ResultSet rs = st.executeQuery(sql);
 	        if(rs.next()){
-	        	 v = new Version(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"), 
-	                				   rs.getInt("quantidade"), 
-	        			               rs.getTimestamp("datafabricacao").toLocalDateTime(),
-	        			               rs.getDate("datavalidade").toLocalDate());
+	        	 v = new Version(rs.getInt("documentID"), rs.getInt("versionID"),
+						 		 rs.getTimestamp("CreationDate").toLocalDateTime(),
+	        			         rs.getString("AccessLink"));
 	        }
 	        st.close();
 		} catch (Exception e) {
@@ -67,20 +65,16 @@ public class VersionDAO extends DAO {
 		return get("");
 	}
 
-	
+	/*	
 	public List<Version> getOrderByID() {
 		return get("id");		
 	}
-	
-	
 	public List<Version> getOrderByDescricao() {
 		return get("descricao");		
 	}
-	
-	
 	public List<Version> getOrderByPreco() {
 		return get("preco");		
-	}
+	}*/
 	
 	
 	private List<Version> get(String orderBy) {
@@ -91,11 +85,17 @@ public class VersionDAO extends DAO {
 			String sql = "SELECT * FROM Version" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
 			ResultSet rs = st.executeQuery(sql);	           
 	        while(rs.next()) {	            	
+				Version v = new Version(rs.getInt("documentID"), rs.getInt("versionID"),
+						 		 rs.getTimestamp("CreationDate").toLocalDateTime(),
+	        			         rs.getString("AccessLink"));
+				/*
+				pedaco do max pra debug
 	        	Version p = new Version(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"), 
 	        			                rs.getInt("quantidade"),
 	        			                rs.getTimestamp("datafabricacao").toLocalDateTime(),
 	        			                rs.getDate("datavalidade").toLocalDate());
-	            Versions.add(p);
+				*/
+	            Versions.add(v);
 	        }
 	        st.close();
 		} catch (Exception e) {
@@ -108,14 +108,13 @@ public class VersionDAO extends DAO {
 	public boolean update(Version version) {
 		boolean status = false;
 		try {  
-			String sql = "UPDATE Version SET descricao = '" + version.getDescricao() + "', "
-					   + "preco = " + version.getPreco() + ", " 
-					   + "quantidade = " + version.getQuantidade() + ","
-					   + "datafabricacao = ?, " 
-					   + "datavalidade = ? WHERE id = " + version.getID();
+			String sql = "UPDATE Version SET documentID = '" + version.getdocumentID() + "', "
+					   + "versionID = " + version.getVersionID() + ", " 
+					   + "creationDate = " + version.getCreationDate() + ","
+					   + "accessLink = " + version.getAccessLink();
 			PreparedStatement st = conexao.prepareStatement(sql);
-		    st.setTimestamp(1, Timestamp.valueOf(version.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(version.getDataValidade()));
+		    st.setTimestamp(1, Timestamp.valueOf(version.getCreationDate()));
+			// st.setDate(2, Date.valueOf(version.getDataValidade()));
 			st.executeUpdate();
 			st.close();
 			status = true;
@@ -130,7 +129,7 @@ public class VersionDAO extends DAO {
 		boolean status = false;
 		try {  
 			Statement st = conexao.createStatement();
-			st.executeUpdate("DELETE FROM Version WHERE id = " + id);
+			st.executeUpdate("DELETE FROM Version WHERE versionID = " + id);
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
