@@ -4,57 +4,69 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-
 public class Document {
-   protected int ID;
-   protected int UserID;
-   protected String DocName;
-   protected LocalDateTime DateCreation;
+  protected int documentID;
+  protected int UserID;
+  protected String DocName;
+  protected LocalDateTime creationDate;
 
-   
-   public Document(){
-     ID = -1;
-     UserID = -1;
-     DocName = "";
-     DataCreation = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+  public Document() {
+    documentID = -1;
+    UserID = -1;
+    DocName = "";
+    creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
-   }
+  }
 
+  public Document(int documentID, int UserID, String DocName, LocalDateTime creationDate) {
 
-   public Document(int ID,int UserID,String DocName,LocalDateTime DateCreation){
+    setDocumentID(documentID);
+    setUserID(UserID);
+    setDocName(DocName);
+    setcreationDate(creationDate);
 
-     setID(ID);
-     setUserID(UserID);
-     setDocName(DocName);
-     setDateCreation(DateCreation);
+  }
 
-   }
+  public int getDocumentID() {
+    return this.documentID;
+  }
 
+  public int getUserID() {
+    return this.UserID;
+  }
 
+  public String getDocName() {
+    return this.DocName;
+  }
 
-   public  int getID(){   return this.ID;   }
-   public  int getUserID(){   return this.UserID;   }
-   public  String getDocName(){   return this.DocName;   }
-   public  LocalDateTime getDateCreation(){    return this.DateCreation  } 
+  public  LocalDateTime getCreationDate(){    return this.creationDate;  }
 
+  public void setDocumentID(int documentID) {
+    this.documentID = documentID;
+  }
 
+  public void setUserID(int UserID) {
+    this.UserID = UserID;
+  }
 
-   public static void setID(int ID){   this.ID = ID;    }
-   public static void setUserID(int UserID){   this.UserID = UserID;   }
-   public static void setDocName(String DocName){   this.DocName = DocName;   }
-   public static void setDateCreation(LocalDateTime DateCreation){  this.DateCreation = DateCreation;  }
+  public void setDocName(String DocName) {
+    this.DocName = DocName;
+  }
 
+  public void setcreationDate(LocalDateTime creationDate) {
+    this.creationDate = creationDate;
+  }
 
-   @Override
-    public String toString() {
-        return "Document ID: " + this.ID + "   User ID: " + this.UserID + "   Document Name: " + this.DocName + "   Date of Creation: "
-            + this.DateCreation;
-    }
-    
+  @Override
+  public String toString() {
+    return "Document ID: " + this.documentID + "   User ID: " + this.UserID + "   Document Name: " + this.DocName
+        + "   Date of Creation: "
+        + this.creationDate;
+  }
 
-    @Override
-      public boolean equals(Object obj) {
-          return (this.getID() == ((Document) obj).getID());
-    } 
+  @Override
+  public boolean equals(Object obj) {
+    return (this.getDocumentID() == ((Document) obj).getDocumentID());
+  }
 
 }
