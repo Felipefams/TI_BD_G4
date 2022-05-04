@@ -19,7 +19,7 @@ public class Version {
     public Version(int versionid, int documentID, LocalDateTime CreationDate, String AccessLink) {
         setVersionID(versionid);
         setdocumentID(documentID);
-        setData_of_Creation(CreationDate);
+        setCreationDate(CreationDate);
         setAccessLink(AccessLink);
     }
 
@@ -31,7 +31,7 @@ public class Version {
         return this.documentID;
     }
 
-    public LocalDateTime getData_of_Creation() {
+    public LocalDateTime getCreationDate() {
         return this.CreationDate;
     }
 
@@ -47,7 +47,7 @@ public class Version {
         this.documentID = documentID;
     }
 
-    public void setData_of_Creation(LocalDateTime CreationDate) {
+    public void setCreationDate(LocalDateTime CreationDate) {
         this.CreationDate = CreationDate;
     }
 
