@@ -50,8 +50,8 @@ public class VersionDAO extends DAO {
 			ResultSet rs = st.executeQuery(sql);
 	        if(rs.next()){
 	        	 v = new Version(rs.getInt("documentID"), rs.getInt("versionID"),
-						 		 rs.getTimestamp("CreationDate").toLocalDateTime(),
-	        			         rs.getString("AccessLink"));
+						 		 rs.getTimestamp("creationDate").toLocalDateTime(),
+	        			         rs.getString("accessLink"));
 	        }
 	        st.close();
 		} catch (Exception e) {
