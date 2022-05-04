@@ -6,23 +6,23 @@ import java.time.temporal.ChronoUnit;
 
 public class Document {
   protected int documentID;
-  protected int UserID;
-  protected String DocName;
+  protected int userID;
+  protected String docName;
   protected LocalDateTime creationDate;
 
   public Document() {
     documentID = -1;
-    UserID = -1;
-    DocName = "";
+    userID = -1;
+    docName = "";
     creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
   }
 
-  public Document(int documentID, int UserID, String DocName, LocalDateTime creationDate) {
+  public Document(int documentID, int userID, String docName, LocalDateTime creationDate) {
 
     setDocumentID(documentID);
-    setUserID(UserID);
-    setDocName(DocName);
+    setUserID(userID);
+    setDocName(docName);
     setcreationDate(creationDate);
 
   }
@@ -32,11 +32,11 @@ public class Document {
   }
 
   public int getUserID() {
-    return this.UserID;
+    return this.userID;
   }
 
   public String getDocName() {
-    return this.DocName;
+    return this.docName;
   }
 
   public  LocalDateTime getCreationDate(){    return this.creationDate;  }
@@ -45,12 +45,12 @@ public class Document {
     this.documentID = documentID;
   }
 
-  public void setUserID(int UserID) {
-    this.UserID = UserID;
+  public void setUserID(int userID) {
+    this.userID = userID;
   }
 
-  public void setDocName(String DocName) {
-    this.DocName = DocName;
+  public void setDocName(String docName) {
+    this.docName = docName;
   }
 
   public void setcreationDate(LocalDateTime creationDate) {

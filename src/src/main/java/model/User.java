@@ -1,57 +1,57 @@
 package model;
 
 public class User {
-    protected int ID;
-    protected String Name;
-    protected String Email;
-    protected String RecoveryEmail;
-    protected String UserPassword;
+    protected int userID;
+    protected String userName;
+    protected String email;
+    protected String recoveryEmail;
+    protected String userPassword;
 
 
-    public Produto() {
-        ID = -1;
-        Name = "";
-        Email = "";
-        RecoveryEmail = "";
-        UserPassword = "";
+    public User() {
+        userrID = -1;
+        userName = "";
+        email = "";
+        recoveryEmail = "";
+        userPassword = "";
     }
 
 
-    public Produto(int ID, String Name, String Email, String RecoveryEmail, String UserPassword) {
-          setID(ID);
-          setName(Name);
-          setEmail(Email);
-          setRecoveryEmail(RecoveryEmail);
-          setUserPassword(UserPassword);
+    public User(int userID, String userName, String email, String recoveryEmail, String userPassword) {
+          setUserID(userID);
+          setName(userName);
+          setEmail(email);
+          setRecoveryEmail(recoveryEmail);
+          setUserPassword(userPassword);
     
     } 
 
 
-    public int getID() {     return this.ID;    }
-    public String getName() {   return this.Name;    }
-    public String getEmail() {     return this.Email;     }
-    public String getRecoveryEmail() {  return this.RecoveryEmail;   }
-    public String getUserPassword() {     return this.UserPassword;    }
+    public int getuserID() {     return this.userID;    }
+    public String getUserName() {   return this.userName;    }
+    public String getEmail() {     return this.email;     }
+    public String getRecoveryEmail() {  return this.recoveryEmail;   }
+    public String getUserPassword() {     return this.userPassword;    }
     
     
     
-    public void setID(int ID) {    this.ID = ID;    }
-    public void setName(String Name) {   this.Name = Name;    }
-    public void setEmail(String Email) {   this.Email = Email;    }
-    public void setRecoveryEmail(String RecoveryEmail) {   this.RecoveryEmail  = RecoveryEmail;   }
-    public void setUserPassword(String UserPassword) {    this.UserPassword = UserPassword;    }
+    public void setUserID(int userID) {    this.userID = userID;    }
+    public void setUserName(String userName) {   this.userName = userName;    }
+    public void setEmail(String email) {   this.email = email;    }
+    public void setRecoveryEmail(String recoveryEmail) {   this.recoveryEmail  = recoveryEmail;   }
+    public void setUserPassword(String userPassword) {    this.userPassword = userPassword;    }
 
 
     @Override
     public String toString() {
-          return "User ID: " + this.ID + "   UserName: " + this.Name + "   Email: " + this.email + "   Recovery Email: "
-              + this.RecoveryEmail  + "   Password: " + this.UserPasssword;
+          return "User ID: " + this.userID + "   UserName: " + this.userName + "   Email: " + this.email + "   Recovery Email: "
+              + this.recoveryEmail  + "   Password: " + this.userPasssword;
     }
    
 
     @Override
     public boolean equals(Object obj) {
-            return (this.getID() == ((User) obj).getID());
+            return (this.getuserID() == ((User) obj).getID());
     } 
 
 }
