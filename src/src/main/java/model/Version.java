@@ -4,27 +4,27 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Version {
-    private int versionid;
     private int documentID;
-    private LocalDateTime CreationDate;
-    private String AccessLink;
+    private int versionID;
+    private LocalDateTime creationDate;
+    private String accessLink;
 
     public Version() {
-        versionid = -1;
+        versionID = -1;
         documentID = -1;
-        CreationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-        AccessLink = "";
+        creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        accessLink = "";
     }
 
-    public Version(int versionid, int documentID, LocalDateTime CreationDate, String AccessLink) {
-        setVersionID(versionid);
+    public Version(int versionID, int documentID, LocalDateTime CreationDate, String AccessLink) {
+        setVersionID(versionID);
         setdocumentID(documentID);
         setCreationDate(CreationDate);
         setAccessLink(AccessLink);
     }
 
     public int getVersionID() {
-        return this.versionid;
+        return this.versionID;
     }
 
     public int getdocumentID() {
@@ -32,15 +32,15 @@ public class Version {
     }
 
     public LocalDateTime getCreationDate() {
-        return this.CreationDate;
+        return this.creationDate;
     }
 
     public String getAccessLink() {
-        return this.AccessLink;
+        return this.accessLink;
     }
 
     public void setVersionID(int versionid) {
-        this.versionid = versionid;
+        this.versionID = versionid;
     }
 
     public void setdocumentID(int documentID) {
@@ -48,17 +48,17 @@ public class Version {
     }
 
     public void setCreationDate(LocalDateTime CreationDate) {
-        this.CreationDate = CreationDate;
+        this.creationDate = CreationDate;
     }
 
     public void setAccessLink(String AccessLink) {
-        this.AccessLink = AccessLink;
+        this.accessLink = AccessLink;
     }
 
     @Override
     public String toString() {
-        return "ID da Versão: " + this.versionid + "   ID do Documento: " + this.documentID + "   Data de Criação: "
-                + this.CreationDate;
+        return "ID da Versão: " + this.versionID + "   ID do Documento: " + this.documentID + "   Data de Criação: "
+                + this.creationDate;
     }
 
     @Override
