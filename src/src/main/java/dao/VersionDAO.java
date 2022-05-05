@@ -27,7 +27,7 @@ public class VersionDAO extends DAO {
 		//done
 		boolean status = false;
 		try {
-			String sql = "INSERT INTO Version (documentID, versionID, creationDate, accessLink) "
+			String sql = "INSERT INTO version (documentID, versionID, creationDate, accessLink) "
 		               + "VALUES ('" + version.getdocumentID() + "', "
 		               + version.getVersionID() + ", " + version.getCreationDate() + ");";//", ?, ?);";
 			PreparedStatement st = conexao.prepareStatement(sql);
@@ -46,7 +46,7 @@ public class VersionDAO extends DAO {
 		Version v = null;
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM Version WHERE versionID="+id;
+			String sql = "SELECT * FROM version WHERE versionID="+id;
 			ResultSet rs = st.executeQuery(sql);
 	        if(rs.next()){
 	        	 v = new Version(rs.getInt("documentID"), rs.getInt("versionID"),
@@ -82,7 +82,7 @@ public class VersionDAO extends DAO {
 		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM Version" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
+			String sql = "SELECT * FROM version" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
 			ResultSet rs = st.executeQuery(sql);	           
 	        while(rs.next()) {	            	
 				Version v = new Version(rs.getInt("documentID"), rs.getInt("versionID"),
@@ -129,7 +129,7 @@ public class VersionDAO extends DAO {
 		boolean status = false;
 		try {  
 			Statement st = conexao.createStatement();
-			st.executeUpdate("DELETE FROM Version WHERE versionID = " + id);
+			st.executeUpdate("DELETE FROM version WHERE versionID = " + id);
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
