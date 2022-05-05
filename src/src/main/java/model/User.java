@@ -9,7 +9,7 @@ public class User {
 
 
     public User() {
-        userrID = -1;
+        userID = -1;
         userName = "";
         email = "";
         recoveryEmail = "";
@@ -27,7 +27,7 @@ public class User {
     } 
 
 
-    public int getuserID() {     return this.userID;    }
+    public int getUserID() {     return this.userID;    }
     public String getUserName() {   return this.userName;    }
     public String getEmail() {     return this.email;     }
     public String getRecoveryEmail() {  return this.recoveryEmail;   }
