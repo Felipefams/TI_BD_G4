@@ -66,6 +66,21 @@ public class UserDAO extends DAO {
 	public List<User> get() {
 		return get("");
 	}
+	public List<User> getOrderByUserID() {
+		return get("userID");		
+	}
+	public List<User> getOrderByUserName() {
+		return get("userName");		
+	}
+	public List<User> getOrderByEmail() {
+		return get("email");		
+	}
+	public List<User> getOrderByRecoveryEmail(){
+		return get("recoveryEmail");
+	}
+	public List<User> getOrderByUserPassword(){
+		return get("userPassword");
+	}
 	
 	private List<User> get(String orderBy) {
 		List<User> users = new ArrayList<User>();

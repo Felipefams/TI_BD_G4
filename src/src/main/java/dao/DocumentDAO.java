@@ -62,6 +62,18 @@ public class DocumentDAO extends DAO {
 	public List<Document> get() {
 		return get("");
 	}
+	public List<Document> getOrderByDocumentID() {
+		return get("documentID");		
+	}
+	public List<Document> getOrderByUserID() {
+		return get("userID");		
+	}
+	public List<Document> getOrderByDocName(){
+		return get("docName");
+	}
+	public List<Document> getOrderByCreationDate() {
+		return get("creationDate");		
+	}
 
 	private List<Document> get(String orderBy) {
 		List<Document> documents = new ArrayList<Document>();

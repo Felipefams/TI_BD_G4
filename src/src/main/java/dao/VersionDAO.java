@@ -64,17 +64,18 @@ public class VersionDAO extends DAO {
 	public List<Version> get() {
 		return get("");
 	}
-
-	/*	
-	public List<Version> getOrderByID() {
-		return get("id");		
+	public List<Version> getOrderByDocumentID() {
+		return get("documentID");		
 	}
-	public List<Version> getOrderByDescricao() {
-		return get("descricao");		
+	public List<Version> getOrderByVersionID() {
+		return get("versionID");		
 	}
-	public List<Version> getOrderByPreco() {
-		return get("preco");		
-	}*/
+	public List<Version> getOrderByCreationDate() {
+		return get("creationDate");		
+	}
+	public List<Version> getOrderByAccessLink(){
+		return get("accessLink");
+	}
 	
 	
 	private List<Version> get(String orderBy) {
