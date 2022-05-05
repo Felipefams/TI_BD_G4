@@ -94,7 +94,7 @@ public class UserService {
 				+ "        </div>\r\n"
 				+ "    </div>\r\n"
 				+ "    \r\n"
-				+ "    <script src=\"./assets/js/login.js\"></script>\r\n"
+				+ "    <script src=\"../TI_BD_G4/src/src/main/resources/public/assets/js/login.js\"></script>\r\n"
 				+ "    <script>\r\n"
 				+ "\r\n"
 				+ "        // Declara uma função para processar o formulário de login\r\n"
