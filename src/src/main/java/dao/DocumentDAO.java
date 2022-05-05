@@ -21,15 +21,15 @@ public class DocumentDAO extends DAO {
 		close();
 	}
 
-	public boolean insert(Document Document) {
+	public boolean insert(Document document) {
 		boolean status = false;
 		try {
-			String sql = "INSERT INTO Document (descricao, preco, quantidade, datafabricacao, datavalidade) "
-					+ "VALUES ('" + Document.getDescricao() + "', "
-					+ Document.getPreco() + ", " + Document.getQuantidade() + ", ?, ?);";
+			String sql = "INSERT INTO document (documentID, userID, docName, creationDate) "
+					+ "VALUES ('" + document.getDocumentID() + "', "
+					+ document.getUserID() + ", " + document.getDocName()
+					+ ", " + document.getCreationDate() + ");";
 			PreparedStatement st = conexao.prepareStatement(sql);
-			st.setTimestamp(1, Timestamp.valueOf(Document.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(Document.getDataValidade()));
+			st.setTimestamp(1, Timestamp.valueOf(document.getCreationDate()));
 			st.executeUpdate();
 			st.close();
 			status = true;
@@ -40,73 +40,59 @@ public class DocumentDAO extends DAO {
 	}
 
 	public Document get(int id) {
-		Document Document = null;
+		Document document = null;
 
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM Document WHERE id=" + id;
+			String sql = "SELECT * FROM document WHERE id=" + id;
 			ResultSet rs = st.executeQuery(sql);
 			if (rs.next()) {
-				Document = new Document(rs.getInt("id"), rs.getString("descricao"), (float) rs.getDouble("preco"),
-						rs.getInt("quantidade"),
-						rs.getTimestamp("datafabricacao").toLocalDateTime(),
-						rs.getDate("datavalidade").toLocalDate());
+				document = new Document(rs.getInt("documentID"),
+						rs.getInt("userID"), 
+						rs.getString("docName"),
+						rs.getTimestamp("creationDate").toLocalDateTime());
 			}
 			st.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		return Document;
+		return document;
 	}
 
 	public List<Document> get() {
 		return get("");
 	}
 
-	public List<Document> getOrderByID() {
-		return get("id");
-	}
-
-	public List<Document> getOrderByDescricao() {
-		return get("descricao");
-	}
-
-	public List<Document> getOrderByPreco() {
-		return get("preco");
-	}
-
 	private List<Document> get(String orderBy) {
-		List<Document> Documents = new ArrayList<Document>();
+		List<Document> documents = new ArrayList<Document>();
 
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM Document" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
+			String sql = "SELECT * FROM document" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				Document p = new Document(rs.getInt("id"), rs.getString("descricao"), (float) rs.getDouble("preco"),
-						rs.getInt("quantidade"),
-						rs.getTimestamp("datafabricacao").toLocalDateTime(),
-						rs.getDate("datavalidade").toLocalDate());
-				Documents.add(p);
+				Document p = new Document(rs.getInt("documentID"),
+				rs.getInt("userID"), 
+				rs.getString("docName"),
+				rs.getTimestamp("creationDate").toLocalDateTime());
+				documents.add(p);
 			}
 			st.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		return Documents;
+		return documents;
 	}
 
-	public boolean update(Document Document) {
+	public boolean update(Document document) {
 		boolean status = false;
 		try {
-			String sql = "UPDATE Document SET descricao = '" + Document.getDescricao() + "', "
-					+ "preco = " + Document.getPreco() + ", "
-					+ "quantidade = " + Document.getQuantidade() + ","
-					+ "datafabricacao = ?, "
-					+ "datavalidade = ? WHERE id = " + Document.getID();
+			String sql = "UPDATE document SET documentID = '" + document.getDocumentID() + "', "
+					+ "userID = " + document.getUserID() + ", "
+					+ "docName = " + document.getDocName() + ","
+					+ "creationDate = "+ document.getCreationDate() + "WHERE documentID = " + document.getDocumentID();
 			PreparedStatement st = conexao.prepareStatement(sql);
-			st.setTimestamp(1, Timestamp.valueOf(Document.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(Document.getDataValidade()));
+			st.setTimestamp(1, Timestamp.valueOf(document.getCreationDate()));
 			st.executeUpdate();
 			st.close();
 			status = true;
@@ -120,7 +106,7 @@ public class DocumentDAO extends DAO {
 		boolean status = false;
 		try {
 			Statement st = conexao.createStatement();
-			st.executeUpdate("DELETE FROM Document WHERE id = " + id);
+			st.executeUpdate("DELETE FROM document WHERE documentID = " + id);
 			st.close();
 			status = true;
 		} catch (SQLException u) {

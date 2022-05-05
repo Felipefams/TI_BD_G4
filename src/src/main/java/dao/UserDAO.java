@@ -48,7 +48,7 @@ public class UserDAO extends DAO {
 		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM User WHERE id="+id;
+			String sql = "SELECT * FROM User WHERE userID="+id;
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
 	        	 user = new User(rs.getInt("userID"), rs.getString("userName"),  
@@ -62,7 +62,6 @@ public class UserDAO extends DAO {
 		}
 		return user;
 	}
-	
 	
 	public List<User> get() {
 		return get("");
@@ -89,7 +88,6 @@ public class UserDAO extends DAO {
 		return users;
 	}
 	
-	
 	public boolean update(User user) {
 		boolean status = false;
 		try {  
@@ -98,7 +96,7 @@ public class UserDAO extends DAO {
 					   + "email = " + user.getEmail() + ","
 					   + "recoveryEmail = ?, " 
 					   + "userPassword = " + user.getUserPassword() + " " 
-					   + "WHERE id = " + user.getuserID();
+					   + "WHERE userID = " + user.getuserID();
 			PreparedStatement st = conexao.prepareStatement(sql);
 			st.executeUpdate();
 			st.close();
