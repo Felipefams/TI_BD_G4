@@ -28,7 +28,7 @@ public class UserDAO extends DAO {
 		boolean status = false;
 		try {
 			String sql = "INSERT INTO User (userID, userName, email, recoveryEmail, userPassword) "
-		               + "VALUES ('" + user.getuserID() + "', "
+		               + "VALUES ('" + user.getUserID() + "', "
 		               + user.getUserName() + ", " + user.getEmail() + ", " + "?" + ", " + user.getUserPassword()+ ");";
 			PreparedStatement st = conexao.prepareStatement(sql);
 		    // st.setTimestamp(1, Timestamp.valueOf(user.getDataFabricacao()));
@@ -91,12 +91,12 @@ public class UserDAO extends DAO {
 	public boolean update(User user) {
 		boolean status = false;
 		try {  
-			String sql = "UPDATE User SET userID = '" + user.getuserID() + "', "
+			String sql = "UPDATE User SET userID = '" + user.getUserID() + "', "
 					   + "userName = " + user.getUserName() + ", " 
 					   + "email = " + user.getEmail() + ","
 					   + "recoveryEmail = ?, " 
 					   + "userPassword = " + user.getUserPassword() + " " 
-					   + "WHERE userID = " + user.getuserID();
+					   + "WHERE userID = " + user.getUserID();
 			PreparedStatement st = conexao.prepareStatement(sql);
 			st.executeUpdate();
 			st.close();

@@ -44,7 +44,7 @@ public class DocumentDAO extends DAO {
 
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM document WHERE id=" + id;
+			String sql = "SELECT * FROM document WHERE documentID=" + id;
 			ResultSet rs = st.executeQuery(sql);
 			if (rs.next()) {
 				document = new Document(rs.getInt("documentID"),
