@@ -6,6 +6,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import dao.UserDAO;
+import model.Produto;
 import model.User;
 import spark.Request;
 import spark.Response;
@@ -308,24 +309,101 @@ public class UserService {
 	}
 	
 	public Object insert(Request request, Response response) {
+		
 		//Collect Metadata about the new User from the request
 		// ...
 		//After that insert the new User Object
+		
+		String userName = request.queryParams("username");
+		String email = request.queryParams("email");
+		String recoveryEmail = request.queryParams("recovery-email");
+		String userPassword = request.queryParams("user-password");
+		
+		
+		String resp = "";
+		
+		User user = new User(-1, userID, userName, email, recoveryEmail, userPassword);
+		
+		if(UserDAO.insert(user) == true) {
+            resp = "User (" + userName + ") criada!";
+            response.status(201); // 201 Created
+		} else {
+			resp = "User (" + userName + ") não criada!";
+			response.status(404); // 404 Not found
+		}
+		
+		// -- Precisa preencher html 
+		makeForm();
+		return form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">", "<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\""+ resp +"\">");
 	}
 	
 	public Object get(Request request, Response response) {
+		
 		//Method to return the HTTP request with a Specific User
 		// ...
+		
+		int id = Integer.parseInt(request.params(":id"));		
+		User user = (User) UserDAO.get(id);
+		
+		if (user != null) {
+			response.status(200); // success
+			
+			// -- Precisa preencher html 
+			makeForm( user );
+        
+		} else {
+            response.status(404); // 404 Not found
+            String resp = "User " + id + " não encontrado.";
+    		makeForm();
+    		form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">", "<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\""+ resp +"\">");     
+        }
+
+		return form;
 	}
 	
 	public Object getToUpdate(Request request, Response response) {
-		//Method to get a User for Update in above method
-		// ...
+		int id = Integer.parseInt(request.params(":id"));		
+		User user = (User) UserDAO.get(id);
+		
+		if (user != null) {
+			response.status(200); // success
+			
+			// -- Precisa preencher html 
+			makeForm( user );
+			
+        } else {
+            response.status(404); // 404 Not found
+            String resp = "User " + id + " não encontrado.";
+            
+            // -- Precisa preencher html 
+    		makeForm();
+    		form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">", "<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\""+ resp +"\">");     
+        }
+
+		return form;
 	}
 	
 	public Object update(Request request, Response response) {
 		//Method to Update the Metadata from a User
 		// ...
+		int id = Integer.parseInt(request.params(":id"));
+		User user = UserDAO.get(id);
+        String resp = "";       
+
+        if (user != null) {
+        	user.setDescricao(request.queryParams("descricao"));
+        	UserDAO.update(user);
+        	response.status(200); // success
+            resp = "User (ID " + user.getUserID() + ") atualizado!";
+        } else {
+            response.status(404); // 404 Not found
+            resp = "User (ID " + produto.getUserID() + \") não encontrado!";
+        }
+        
+        // -- Precisa preencher html 
+        
+		makeForm();
+		return form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">", "<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\""+ resp +"\">");
 	}
 	
 	public Object getAll(Request request, Response response) {
@@ -335,9 +413,4 @@ public class UserService {
 		return form;
 	}
 	
-	public Object delete(Request request, Response response) {
-		//Method to get all Users of a User
-		// ...
-	}
-
 }
