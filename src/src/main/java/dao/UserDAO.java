@@ -24,15 +24,15 @@ public class UserDAO extends DAO {
 	}
 	
 	
-	public boolean insert(User User) {
+	public boolean insert(User user) {
 		boolean status = false;
 		try {
-			String sql = "INSERT INTO User (descricao, preco, quantidade, datafabricacao, datavalidade) "
-		               + "VALUES ('" + User.getDescricao() + "', "
-		               + User.getPreco() + ", " + User.getQuantidade() + ", ?, ?);";
+			String sql = "INSERT INTO User (userID, userName, email, recoveryEmail, userPassword) "
+		               + "VALUES ('" + user.getuserID() + "', "
+		               + user.getUserName() + ", " + user.getEmail() + ", " + "?" + ", " + user.getUserPassword()+ ");";
 			PreparedStatement st = conexao.prepareStatement(sql);
-		    st.setTimestamp(1, Timestamp.valueOf(User.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(User.getDataValidade()));
+		    // st.setTimestamp(1, Timestamp.valueOf(user.getDataFabricacao()));
+			// st.setDate(2, Date.valueOf(user.getDataValidade()));
 			st.executeUpdate();
 			st.close();
 			status = true;
@@ -44,23 +44,23 @@ public class UserDAO extends DAO {
 
 	
 	public User get(int id) {
-		User User = null;
+		User user = null;
 		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "SELECT * FROM User WHERE id="+id;
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
-	        	 User = new User(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"), 
-	                				   rs.getInt("quantidade"), 
-	        			               rs.getTimestamp("datafabricacao").toLocalDateTime(),
-	        			               rs.getDate("datavalidade").toLocalDate());
+	        	 user = new User(rs.getInt("userID"), rs.getString("userName"),  
+	                				   rs.getString("email"), 
+	        			               rs.getString("recoveryEmail"),
+	        			               rs.getString("userPassword"));
 	        }
 	        st.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		return User;
+		return user;
 	}
 	
 	
@@ -69,38 +69,37 @@ public class UserDAO extends DAO {
 	}
 	
 	private List<User> get(String orderBy) {
-		List<User> Users = new ArrayList<User>();
+		List<User> users = new ArrayList<User>();
 		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "SELECT * FROM User" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
 			ResultSet rs = st.executeQuery(sql);	           
 	        while(rs.next()) {	            	
-	        	User p = new User(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"), 
-	        			                rs.getInt("quantidade"),
-	        			                rs.getTimestamp("datafabricacao").toLocalDateTime(),
-	        			                rs.getDate("datavalidade").toLocalDate());
-	            Users.add(p);
+	        	User p = new User(rs.getInt("userID"), rs.getString("userName"),  
+	                				   rs.getString("email"), 
+	        			               rs.getString("recoveryEmail"),
+	        			               rs.getString("userPassword"));
+	            users.add(p);
 	        }
 	        st.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		return Users;
+		return users;
 	}
 	
 	
-	public boolean update(User User) {
+	public boolean update(User user) {
 		boolean status = false;
 		try {  
-			String sql = "UPDATE User SET descricao = '" + User.getDescricao() + "', "
-					   + "preco = " + User.getPreco() + ", " 
-					   + "quantidade = " + User.getQuantidade() + ","
-					   + "datafabricacao = ?, " 
-					   + "datavalidade = ? WHERE id = " + User.getID();
+			String sql = "UPDATE User SET userID = '" + user.getuserID() + "', "
+					   + "userName = " + user.getUserName() + ", " 
+					   + "email = " + user.getEmail() + ","
+					   + "recoveryEmail = ?, " 
+					   + "userPassword = " + user.getUserPassword() + " " 
+					   + "WHERE id = " + user.getuserID();
 			PreparedStatement st = conexao.prepareStatement(sql);
-		    st.setTimestamp(1, Timestamp.valueOf(User.getDataFabricacao()));
-			st.setDate(2, Date.valueOf(User.getDataValidade()));
 			st.executeUpdate();
 			st.close();
 			status = true;
@@ -110,26 +109,12 @@ public class UserDAO extends DAO {
 		return status;
 	}
 	
-	
-	public boolean delete(int id) {
-		boolean status = false;
-		try {  
-			Statement st = conexao.createStatement();
-			st.executeUpdate("DELETE FROM User WHERE id = " + id);
-			st.close();
-			status = true;
-		} catch (SQLException u) {  
-			throw new RuntimeException(u);
-		}
-		return status;
-	}
-
 	public boolean autenticar(String login, String senha) {
 		boolean resp = false;
 		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM usuario WHERE login LIKE '" + login + "' AND senha LIKE '" + senha  + "'";
+			String sql = "SELECT * FROM user WHERE email LIKE '" + login + "' AND userPassword LIKE '" + senha  + "'";
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);
 			resp = rs.next();
