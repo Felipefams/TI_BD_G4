@@ -222,7 +222,7 @@ public class UserService {
 				+ "        integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\"\r\n"
 				+ "        crossorigin=\"anonymous\"></script>";
 		
-		form = form.replaceFirst("<login>", login);
+		form = form.replaceFirst("<SIGNUP>", login);
 		
 	}
 	
@@ -303,7 +303,7 @@ public class UserService {
 				+ "        integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\"\r\n"
 				+ "        crossorigin=\"anonymous\"></script>";
 		
-		form = form.replaceFirst("<login>", login);
+		form = form.replaceFirst("<LOGIN>", login);
 		
 	}
 	
@@ -329,8 +329,10 @@ public class UserService {
 	}
 	
 	public Object getAll(Request request, Response response) {
-		//Method to get all Users of a User
-		// ...
+		makeFormLogin();
+	    response.header("Content-Type", "text/html");
+	    response.header("Content-Encoding", "UTF-8");
+		return form;
 	}
 	
 	public Object delete(Request request, Response response) {

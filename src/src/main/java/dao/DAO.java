@@ -16,8 +16,8 @@ public class DAO{
         String mydatabase = "writerhub";
         int port = 5432;
         String url = "jdbc:postgresql://" + serverName + ":" + port +"/" + mydatabase;
-        String username = " ";
-        String password = " ";
+        String username = "";
+        String password = "";
         boolean status = false;
 
 

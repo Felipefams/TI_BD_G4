@@ -55,8 +55,11 @@ public class DocumentService {
 	}
 	
 	public Object getAll(Request request, Response response) {
-		//Method to get all documents of a User
-		// ...
+		int orderBy = Integer.parseInt(request.params(":orderby"));
+		makeForm(orderBy);
+	    response.header("Content-Type", "text/html");
+	    response.header("Content-Encoding", "UTF-8");
+		return form;
 	}
 	
 	public Object delete(Request request, Response response) {

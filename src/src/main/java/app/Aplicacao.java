@@ -14,14 +14,16 @@ public class Aplicacao {
 	//Talvez colocar outras entidades aqui depois
 	
 	public static void main(String[] args) {
-		port(6789);
+		port(5789);
 		
 		staticFiles.location("/public");
+		
+		get("/", (request, response) -> "Esse E um teste");
 		
 		post("/document/insert", (request, response) -> documentService.insert(request, response));
 		post("/document/:id/version/insert", (request, response) -> versionService.insert(request, response));
 		
-		get("/document/list/:orderby", (request, response) -> documentService.getAll(request, response));
+		get("/document/list/:orderby", (request, response) -> userService.getAll(request, response));
 		get("/document/:id/version/list/:orderby", (request, response) -> versionService.getAll(request, response));
 		
 		
