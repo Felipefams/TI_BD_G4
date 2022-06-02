@@ -1,0 +1,39 @@
+/* * CSS stylesheet by Felipe Augusto Morais Silva */
+
+/*?----------------------------------Global defs---------------------------------------*/
+:root{
+    /* Definicao de variavel para cor padrao da pagina*/
+    --default_color100:rgba(255, 255, 255, 1);
+    --default_color075:rgba(255, 255, 255, 0.75);
+    --default_color050:rgb(255, 255, 255, 0.50);
+    --default_color025:rgba(255, 255, 255, 0.25);
+}
+body{
+    background-image: url(../img/mountain1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+/*!---------------------------------END Global defs------------------------------------*/
+
+
+.border{
+    /* border-image: linear-gradient(to right, blue, green, pink, yellow, purple) 10 !important; */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+#login-column{
+    background-color:var(--default_color075);
+}
+
+/*TODO CSS do Constantino */
+#loginExistente {
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+#teste {
+    font-size: smaller;
+}
+#login {
+    margin-top: 5%;
+}
+/*!End CSS do Constantino */
