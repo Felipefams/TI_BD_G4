@@ -160,15 +160,15 @@ let form = document.getElementById("register-form");
 function guardar() {
 
   var email = document.getElementById("email").value;
-  localStorage.setItem('email', email.value);
+  localStorage.setItem('email', name.value);
 
   password = document.getElementById("password").value; localStorage.setItem('password', password.value);
 
   nome = document.getElementById("nome").value;
   localStorage.setItem('nome', nome.value);
 
-  sobrenome = document.getElementById("emailrecuperacao").value;
-  localStorage.setItem('emailrecuperacao', emailrecuperacao.value);
+  sobrenome = document.getElementById("sobrenome").value;
+  localStorage.setItem('sobrenome', sobrenome.value);
 }
 
 function checar() {
@@ -192,16 +192,15 @@ function checar() {
 
 function gravar() {
   var uemail = document.getElementById("email").value;
-  var unome = document.getElementById("nome").value;
+  var nome = document.getElementById("nome").value;
   var upassword = document.getElementById("password").value;
-  var uemailr = document.getElementById("emailrecuperacao").value;
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "http://localhost:2727/users/", true);
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.send(JSON.stringify({
 		email: uemail,
-		recoveryEmail: uemailr,
-		userName: unome,
+		recoveryEmail: uemail,
+		userName: nome,
 		userPassword: upassword,
 	}));
 	xhr.onload = function() {
