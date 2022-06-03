@@ -19,7 +19,7 @@ public class User {
 
     public User(int userID, String userName, String email, String recoveryEmail, String userPassword) {
           setUserID(userID);
-          setName(userName);
+          setUserName(userName);
           setEmail(email);
           setRecoveryEmail(recoveryEmail);
           setUserPassword(userPassword);
@@ -45,13 +45,13 @@ public class User {
     @Override
     public String toString() {
           return "User ID: " + this.userID + "   UserName: " + this.userName + "   Email: " + this.email + "   Recovery Email: "
-              + this.recoveryEmail  + "   Password: " + this.userPasssword;
+              + this.recoveryEmail  + "   Password: " + this.userPassword;
     }
    
 
     @Override
     public boolean equals(Object obj) {
-            return (this.getuserID() == ((User) obj).getID());
+            return (this.getUserID() == ((User) obj).getUserID());
     } 
 
 }

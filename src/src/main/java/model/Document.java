@@ -59,7 +59,7 @@ public class Document {
 
   @Override
   public String toString() {
-    return "Document ID: " + this.documentID + "   User ID: " + this.UserID + "   Document Name: " + this.DocName
+    return "Document ID: " + this.documentID + "   User ID: " + this.userID + "   Document Name: " + this.docName
         + "   Date of Creation: "
         + this.creationDate;
   }
