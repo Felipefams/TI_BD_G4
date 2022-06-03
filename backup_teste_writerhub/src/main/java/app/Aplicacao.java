@@ -49,45 +49,6 @@ public class Aplicacao {
 			return null;
 		});		
 
-		/*
-		// get("/user/insert", (request, response) -> {
-		// 	response.redirect("/document/list/1");
-		// 	return null;
-		// });
-
-		get("/user/login", (request, response) -> userService.getAll(request, response));
-
-		// get("/user/login/", (request, response) -> {
-		// 	response.redirect("/document/list/1");
-		// 	return "";
-		// });
-
-		// post("/document/insert", (request, response) ->
-		// documentService.insert(request, response));
-		// post("/document/:id/version/insert", (request, response) ->
-		// versionService.insert(request, response));
-
-		get("/user/document/list/:orderby", (request, response) -> userService.getAll(request, response));
-		// get("/document/:id/version/list/:orderby", (request, response) ->
-		// versionService.getAll(request, response));
-
-		// Get and Post Document Attributes
-		// get("/document/update/:id", (request, response) ->
-		// documentService.getToUpdate(request, response));
-		// post("/document/update/:id", (request, response) ->
-		// documentService.update(request, response));
-
-		// Get and Post Specific Document Version Attributes
-		// get("/document/:id/update/version/:id", (request, response) ->
-		// versionService.getToUpdate(request, response));
-		// post("/document/:id/update/version/:id", (request, response) ->
-		// versionService.update(request, response));
-
-		// get("/document/delete/:id", (request, response) ->
-		// documentService.delete(request, response));
-		// get("/document/:id/version/:id", (request, response) ->
-		// versionService.delete(request, response));
-		*/
 	}
 
 }
