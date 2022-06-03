@@ -1,75 +1,112 @@
 package service;
 
-import java.util.Scanner;
-import java.time.LocalDate;
-import java.io.File;
 import java.time.LocalDateTime;
-import java.util.List;
 import dao.VersionDAO;
 import model.Version;
 import spark.Request;
 import spark.Response;
 
-
 public class VersionService {
-	
-	private VersionDAO VersionDAO = new VersionDAO();
+
+	private VersionDAO versionDAO = new VersionDAO();
+
 	private String form;
-	private final int FORM_INSERT = 1;
-	private final int FORM_DETAIL = 2;
-	private final int FORM_UPDATE = 3;
-	private final int FORM_ORDERBY_ID = 1;
-	private final int FORM_ORDERBY_DESCRICAO = 2;
-	private final int FORM_ORDERBY_PRECO = 3;
-	
+
 	public VersionService() {
-		makeForm();
 	}
-	
-	public void makeForm() {
-		makeForm(FORM_INSERT, new Version(), FORM_ORDERBY_DESCRICAO);
+
+	public Object insert(int documentID, Request request, Response response) {
+		String accessLink = request.queryParams("accessLink");
+		LocalDateTime creationDate = LocalDateTime.parse(request.queryParams("creationDate"));
+
+		String resp = "";
+
+		Version version = new Version(-1, documentID, creationDate, accessLink);
+
+		if (versionDAO.insert(version) == true) {
+			resp = "Version criada!";
+			response.status(201); // 201 Created
+		} else {
+			resp = "Version n�o criada!";
+			response.status(404); // 404 Not found
+		}
+
+		return form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">",
+				"<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"" + resp + "\">");
 	}
-	
-	public void makeForm(int orderBy) {
-		makeForm(FORM_INSERT, new Version(), orderBy);
+
+	public Object get(int documentID, Request request, Response response) {
+		int id = Integer.parseInt(request.params(":id"));
+		Version version = (Version) versionDAO.get(id);
+
+		if (version != null) {
+			response.status(200); // success
+		} else {
+			response.status(404); // 404 Not found
+			String resp = "Version " + id + " n�o encontrado.";
+			form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">",
+					"<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"" + resp + "\">");
+		}
+
+		return form;
 	}
-	
-	public void makeForm(int type, Version Version, int orderBy) {
-		String nomeArquivo = "form.html";
-	
-	//Implement Method to create the component
-		
+
+	public Object getToUpdate(int documentID, Request request, Response response) {
+		int id = Integer.parseInt(request.params(":id"));
+		Version version = (Version) versionDAO.get(id);
+		if (version != null) {
+			response.status(200); // success
+		} else {
+			response.status(404); // 404 Not found
+			String resp = "Version " + id + " n�o encontrado.";
+			form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">",
+					"<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"" + resp + "\">");
+		}
+		return form;
 	}
-	
-	public Object insert(Request request, Response response) {
-		//Collect Metadata about the new Version from the request
-		// ...
-		//After that insert the new Version Object
+
+	public Object update(int userID, Request request, Response response) {
+		int id = Integer.parseInt(request.params(":id"));
+		Version version = versionDAO.get(id);
+		String resp = "";
+
+		if (version != null) {
+			version.setAccessLink(request.queryParams("access-link"));
+			versionDAO.update(version);
+			response.status(200); // success
+			resp = "Version (ID " + version.getVersionID() + ") atualizado!";
+		} else {
+			response.status(404); // 404 Not found
+			resp = "Version (ID " + version.getVersionID() + ") n�o encontrado!";
+		}
+
+		// -- Precisa preencher html
+
+		return form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">",
+				"<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"" + resp + "\">");
 	}
-	
-	public Object get(Request request, Response response) {
-		//Method to return the HTTP request with a Specific Version
-		// ...
+
+	public Object getAll(int documentID, Request request, Response response) {
+		response.header("Content-Type", "text/html");
+		response.header("Content-Encoding", "UTF-8");
+		return form;
 	}
-	
-	public Object getToUpdate(Request request, Response response) {
-		//Method to get a Version for Update in above method
-		// ...
-	}
-	
-	public Object update(Request request, Response response) {
-		//Method to Update the Metadata from a Version
-		// ...
-	}
-	
-	public Object getAll(Request request, Response response) {
-		//Method to get all Versions of a User
-		// ...
-	}
-	
-	public Object delete(Request request, Response response) {
-		//Method to get all Versions of a User
-		// ...
+
+	public Object delete(int documentID, Request request, Response response) {
+		int id = Integer.parseInt(request.params(":id"));
+		Version version = versionDAO.get(id);
+		String resp = "";
+
+		if (version != null) {
+			versionDAO.delete(id);
+			response.status(200); // success
+			resp = "Version (" + id + ") exclu�do!";
+		} else {
+			response.status(404); // 404 Not found
+			resp = "Version (" + id + ") n�o encontrado!";
+		}
+		return form.replaceFirst("<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"\">",
+				"<input type=\"hidden\" id=\"msg\" name=\"msg\" value=\"" + resp + "\">");
 	}
 
 }

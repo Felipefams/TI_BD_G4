@@ -1,29 +1,31 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 public class Document {
   protected int documentID;
   protected int userID;
   protected String docName;
-  protected LocalDateTime creationDate;
+  protected Date creationDate;
 
   public Document() {
     documentID = -1;
     userID = -1;
     docName = "";
-    creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-
+    creationDate = new Date();
+    //LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+  
+    
   }
 
-  public Document(int documentID, int userID, String docName, LocalDateTime creationDate) {
+  public Document(int documentID, int userID, String docName, java.sql.Date date) {
 
     setDocumentID(documentID);
     setUserID(userID);
     setDocName(docName);
-    setcreationDate(creationDate);
+    setcreationDate(date);
 
   }
 
@@ -39,7 +41,7 @@ public class Document {
     return this.docName;
   }
 
-  public  LocalDateTime getCreationDate(){    return this.creationDate;  }
+  public  Date getCreationDate(){    return this.creationDate;  }
 
   public void setDocumentID(int documentID) {
     this.documentID = documentID;
@@ -53,13 +55,13 @@ public class Document {
     this.docName = docName;
   }
 
-  public void setcreationDate(LocalDateTime creationDate) {
-    this.creationDate = creationDate;
+  public void setcreationDate(Date date) {
+    this.creationDate = date;
   }
 
   @Override
   public String toString() {
-    return "Document ID: " + this.documentID + "   User ID: " + this.UserID + "   Document Name: " + this.DocName
+    return "Document ID: " + this.documentID + "   User ID: " + this.userID + "   Document Name: " + this.docName
         + "   Date of Creation: "
         + this.creationDate;
   }

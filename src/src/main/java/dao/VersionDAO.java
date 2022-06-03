@@ -7,22 +7,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class VersionDAO extends DAO {	
+public class VersionDAO extends DAO {
 	public VersionDAO() {
 		super();
 		conectar();
 	}
-	
-	
+
+
 	public void finalize() {
 		close();
 	}
-	
+
 	public boolean insert(Version version) {
 		//done
 		boolean status = false;
@@ -35,13 +34,13 @@ public class VersionDAO extends DAO {
 			st.executeUpdate();
 			st.close();
 			status = true;
-		} catch (SQLException u) {  
+		} catch (SQLException u) {
 			throw new RuntimeException(u);
 		}
 		return status;
 	}
 
-	
+
 	public Version get(int id) {
 		Version v = null;
 		try {
@@ -59,39 +58,39 @@ public class VersionDAO extends DAO {
 		}
 		return v;
 	}
-	
-	
+
+
 	public List<Version> get() {
 		return get("");
 	}
 	public List<Version> getOrderByDocumentID() {
-		return get("documentID");		
+		return get("documentID");
 	}
 	public List<Version> getOrderByVersionID() {
-		return get("versionID");		
+		return get("versionID");
 	}
 	public List<Version> getOrderByCreationDate() {
-		return get("creationDate");		
+		return get("creationDate");
 	}
 	public List<Version> getOrderByAccessLink(){
 		return get("accessLink");
 	}
-	
-	
+
+
 	private List<Version> get(String orderBy) {
 		List<Version> Versions = new ArrayList<Version>();
-		
+
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "SELECT * FROM version" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
-			ResultSet rs = st.executeQuery(sql);	           
-	        while(rs.next()) {	            	
+			ResultSet rs = st.executeQuery(sql);
+	        while(rs.next()) {
 				Version v = new Version(rs.getInt("documentID"), rs.getInt("versionID"),
 						 		 rs.getTimestamp("CreationDate").toLocalDateTime(),
 	        			         rs.getString("AccessLink"));
 				/*
 				pedaco do max pra debug
-	        	Version p = new Version(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"), 
+	        	Version p = new Version(rs.getInt("id"), rs.getString("descricao"), (float)rs.getDouble("preco"),
 	        			                rs.getInt("quantidade"),
 	        			                rs.getTimestamp("datafabricacao").toLocalDateTime(),
 	        			                rs.getDate("datavalidade").toLocalDate());
@@ -104,13 +103,13 @@ public class VersionDAO extends DAO {
 		}
 		return Versions;
 	}
-	
-	
+
+
 	public boolean update(Version version) {
 		boolean status = false;
-		try {  
+		try {
 			String sql = "UPDATE Version SET documentID = '" + version.getdocumentID() + "', "
-					   + "versionID = " + version.getVersionID() + ", " 
+					   + "versionID = " + version.getVersionID() + ", "
 					   + "creationDate = " + version.getCreationDate() + ","
 					   + "accessLink = " + version.getAccessLink();
 			PreparedStatement st = conexao.prepareStatement(sql);
@@ -119,21 +118,21 @@ public class VersionDAO extends DAO {
 			st.executeUpdate();
 			st.close();
 			status = true;
-		} catch (SQLException u) {  
+		} catch (SQLException u) {
 			throw new RuntimeException(u);
 		}
 		return status;
 	}
-	
-	
+
+
 	public boolean delete(int id) {
 		boolean status = false;
-		try {  
+		try {
 			Statement st = conexao.createStatement();
 			st.executeUpdate("DELETE FROM version WHERE versionID = " + id);
 			st.close();
 			status = true;
-		} catch (SQLException u) {  
+		} catch (SQLException u) {
 			throw new RuntimeException(u);
 		}
 		return status;

@@ -1,44 +1,123 @@
 package app;
 
 import static spark.Spark.*;
-import service.DocumentService;
+
+import com.google.gson.Gson;
+
+import model.Login;
+import model.User;
+import service.DocumentoService;
 import service.UserService;
-import service.VersionService;
 
 public class Aplicacao {
-     
+
 	private static UserService userService = new UserService();
-	private static DocumentService documentService = new DocumentService();
-	private static VersionService versionService = new VersionService();
-	
-	//Talvez colocar outras entidades aqui depois
-	
+
+	private static DocumentoService documentService = new DocumentoService();
+
 	public static void main(String[] args) {
-		port(5789);
-		
-		staticFiles.location("/public");
-		
-		get("/", (request, response) -> "Esse E um teste");
-		
-		post("/document/insert", (request, response) -> documentService.insert(request, response));
-		post("/document/:id/version/insert", (request, response) -> versionService.insert(request, response));
-		
-		get("/document/list/:orderby", (request, response) -> userService.getAll(request, response));
-		get("/document/:id/version/list/:orderby", (request, response) -> versionService.getAll(request, response));
-		
-		
-		//  Get and Post Document Attributes
-		get("/document/update/:id", (request, response) -> documentService.getToUpdate(request, response));
-		post("/document/update/:id", (request, response) -> documentService.update(request, response));
-		
-		// Get and Post Specific Document Version Attributes 
-		get("/document/:id/update/version/:id", (request, response) -> versionService.getToUpdate(request, response));
-		post("/document/:id/update/version/:id", (request, response) -> versionService.update(request, response));
-		
-		
-		get("/document/delete/:id", (request, response) -> documentService.delete(request, response));
-		get("/document/:id/version/:id", (request, response) -> versionService.delete(request, response));
-			
+		port(2727);
+
+		// staticFiles.location("/public");
+
+		get("/hello", (req, res) -> "Hello World");
+
+		// recuperar todos os usuarios
+		post("/log-in", (request, response) -> {
+			try{
+				Gson gson = new Gson();
+				Login login = gson.fromJson(request.body(), Login.class);
+				if (userService.autenticar(login.getEmail(),login.getUserPassword())){
+					response.status(200); // http ok
+					return "ok";
+				}
+				response.status(500);
+				return "ok";
+			} catch (Exception e) {
+				response.status(500);
+				return e.getMessage();
+			}
+		});
+
+		// recuperar todos os usuarios
+		get("/users/", (request, response) -> {
+			return userService.getAll(request, response);
+		});
+
+		// recuperar usuario por id
+		get("/users/:id", (request, response) -> {
+			try{
+				System.out.println(request.params(":id"));
+				return userService.get(request, response);
+			} catch (Exception e) {
+				response.status(500);
+				return e.getMessage();
+			}
+		});
+
+		// salvar usuario
+		post("/users/", (request, response) -> {
+			try{
+				System.out.println(request.body());
+				return userService.insert(request, response);
+			} catch (Exception e) {
+				response.status(500);
+				return e.getMessage();
+			}
+		});
+
+		// alterar usuario
+		put("/user/:id", (request, response) -> {
+			try{
+				System.out.println(request.params(":id"));
+				System.out.println(request.body());
+				return userService.update(request, response);
+			} catch (Exception e) {
+				response.status(500);
+				return e.getMessage();
+			}
+		});
+
+		//------------------------------ DOCUMENT
+
+		// recuperar todos os usuarios
+		get("/documents/", (request, response) -> {
+			return documentService.getAll(request, response);
+		});
+
+		// recuperar usuario por id
+		get("/documents/:id", (request, response) -> {
+			try{
+				System.out.println(request.params(":id"));
+				return documentService.get(request, response);
+			} catch (Exception e) {
+				response.status(500);
+				return e.getMessage();
+			}
+		});
+
+		// salvar usuario
+		post("/documents/", (request, response) -> {
+			try{
+				System.out.println(request.body());
+				return documentService.insert(request, response);
+			} catch (Exception e) {
+				response.status(500);
+				return e.getMessage();
+			}
+		});
+
+		// alterar usuario
+		put("/document/:id", (request, response) -> {
+			try{
+				System.out.println(request.params(":id"));
+				System.out.println(request.body());
+				return documentService.update(request, response);
+			} catch (Exception e) {
+				response.status(500);
+				return e.getMessage();
+			}
+		});
 	}
-	
+
 }

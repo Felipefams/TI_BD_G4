@@ -165,14 +165,11 @@ function setUserPass() {
 initLoginApp();
 
 //*funcao para fazer o logout
-function initPage() {
-
+function initPage(){
     // Associa a função de logout ao botão
     document.getElementById('btn_logout').addEventListener('click', logoutUser);
-
     // Informa o nome do usuário logado
     document.getElementById('nomeUsuario').innerHTML = usuarioCorrente.nome;
-
     // Lista os usuários 
     exibeUsuarios();
 }

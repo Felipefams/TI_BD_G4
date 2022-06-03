@@ -1,43 +1,42 @@
 package dao;
 
-
 import java.sql.*;
+
 /*Isso aqui ta pronto, nao precisa mexer nao, so na hora de fazer a conexao*/
-public class DAO{
-    protected Connection conexao;
+public class DAO {
+	protected Connection conexao;
 
+	public DAO() {
+		conexao = null;
+	}
 
-    public DAO(){ conexao = null;  }
+	public boolean conectar() {
+		String driverName = "org.postgresql.Driver";
+		String serverName = "localhost";
+		String mydatabase = "writerhub";
+		int port = 5432;
+		String url = "jdbc:postgresql://" + serverName + ":" + port + "/" + mydatabase;
+		String username = "ti2cc";
+		String password = "ti@cc";
+		boolean status = false;
 
-
-    public boolean conectar() {
-        String driverName = "org.postgresql.Driver";
-        String serverName = "localhost";
-        String mydatabase = "writerhub";
-        int port = 5432;
-        String url = "jdbc:postgresql://" + serverName + ":" + port +"/" + mydatabase;
-        String username = "";
-        String password = "";
-        boolean status = false;
-
-
-        try {
-            Class.forName(driverName);
+		try {
+			Class.forName(driverName);
 			conexao = DriverManager.getConnection(url, username, password);
 			status = (conexao == null);
 			System.out.println("Conex�o efetuada com o postgres!");
 
-        }catch (ClassNotFoundException e) { 
+		} catch (ClassNotFoundException e) {
 			System.err.println("Conex�o N�O efetuada com o postgres -- Driver n�o encontrado -- " + e.getMessage());
 		} catch (SQLException e) {
 			System.err.println("Conex�o N�O efetuada com o postgres -- " + e.getMessage());
 		}
-        return status;
-    }
+		return status;
+	}
 
-    public boolean close() {
+	public boolean close() {
 		boolean status = false;
-		
+
 		try {
 			conexao.close();
 			status = true;
@@ -45,5 +44,5 @@ public class DAO{
 			System.err.println(e.getMessage());
 		}
 		return status;
-	}  
+	}
 }
