@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Login</title>
+	<link rel="stylesheet" href=".\assets\css\login.css">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+</html>
+</head>
+
+<body>
+	<div id="login-container">
+		<h1>Login</h1>
+		<form id="login-form" method="POST">
+			<label for="email">E-mail</label>
+    <input type="email" name="uemail" id="uemail" placeholder="Digite seu E-mail" autocomplete="off" data-min-length="3" data-required data-email-validate>
+    <label for="password">Senha</label>
+    <input type="password" name="upassword" id="upassword" placeholder="Digite sua senha">
+    <a href="#" id="forgot-pass">Esqueceu a senha?</a>
+    <input type="submit" value="Login" onclick="checar()">
+    <a class="menu__item" href="form.html">Entre como convidado</a>
+</form>
+    <div id="register-container">
+<p>Ainda não tem uma conta?</p>
+<a href="index.html"> Registrar</a>
+    </div>
+    <p class="error-validation template"></p>
+    <script src=".\assets\js\scripts.js"></script>
+    </body>
+</html>

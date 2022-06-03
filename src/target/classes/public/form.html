@@ -1,0 +1,331 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="text/html; charset = UTF-8" http-equiv="content-type">
+  <!--Originally by Ross Andeson-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
+  <link rel="stylesheet" href="./assets/css/editor.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js%22%3E"></script>
+  <script src="https://kit.fontawesome.com/bef85ee825.js" crossorigin="anonymous"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="./assets/js/editor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <script src="https://kit.fontawesome.com/bef85ee825.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+  <title>Controle de Documentos</title>
+</head>
+
+<script type="text/javascript">
+
+  function confirmarDeleteProduto(id, descricao, preco) {
+
+    if (confirm('Confirmar a exclusão do produto [' + descricao + '] (ID ' + id + ') com preço R$ ' + preco)) {
+      location.href = '/produto/delete/' + id;
+    }
+  }
+  function onLoad() {
+    if (document.getElementById("msg").value != "") {
+      alert(document.getElementById("msg").value);
+    }
+  }
+</script>
+
+
+<body onload="onLoad()">
+  <header>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      &nbsp;<i class="fas fa-solid fa-feather fa-2x"></i>
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">&nbsp;WriterHub <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Documento
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Documento - 1</a>
+              <a class="dropdown-item" href="#">Documento - 2</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+
+          <!--
+            <li class="nav-item dropdown ml-auto">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>-->
+
+          <li><i class="glyphicon glyphicon-lock"></i>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp;</li>
+        </ul>
+
+      </div>
+    </nav>
+
+
+  </header>
+  <h1 style="padding: 30px;">Controle de Documentos</h1>
+  <input type="hidden" id="msg" name="msg" value="">
+  <br>
+
+  <table width="80%" align="center" bgcolor="#f3f3f3">
+    <tr>
+      <td colspan="6" align="left">
+        <font size="+2"><b>&nbsp;&nbsp;&nbsp;Documentos</b></font>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="6">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td><a href="/produto/list/1"><b>ID</b></a></td>
+      <td><a href="/produto/list/2"><b>Nome Documento</b></a></td>
+      <td><a href="/produto/list/3"><b>Data de criacao</b></a></td>
+      <td width="100" align="center"><b>Detalhar</b></td>
+      <td width="100" align="center"><b>Atualizar</b></td>
+      <td width="100" align="center"><b>Excluir</b></td>
+    </tr>
+    <!--
+    <ITEM-1>
+      <ITEM-2>
+        <ITEM-3>
+          <ITEM-4>
+            <ITEM-5>
+              <ITEM-6>
+                <ITEM-7>
+                  <ITEM-8>
+                    <ITEM-9>
+                      <ITEM-10>
+                        <ITEM-11>
+                          <ITEM-12>
+                            <ITEM-13>
+                              <ITEM-14>
+                                <ITEM-15>
+                                  <ITEM-16>
+                                    <ITEM-17>
+                                      <ITEM-18>
+                                        <ITEM-19>
+                                          <ITEM-20>
+                                            <ITEM-21>
+                                              <ITEM-22>
+                                                <ITEM-23>
+                                                  <ITEM-24>
+                                                    <ITEM-25>
+                                                      <ITEM-26>
+                                                        <ITEM-27>
+                                                          <ITEM-28>
+                                                            <ITEM-29>
+                                                              <ITEM-30>
+                                                                <ITEM-31>
+                                                                  <ITEM-32>
+                                                                    <ITEM-33>
+                                                                      <ITEM-34>
+                                                                        <ITEM-35>
+                                                                          <ITEM-36>
+                                                                            <ITEM-37>
+                                                                              <ITEM-38>
+                                                                                <ITEM-39>
+                                                                                  <ITEM-40>
+                                                                                    <ITEM-41>
+                                                                                      <ITEM-42>
+                                                                                        <ITEM-43>
+                                                                                          <ITEM-44>
+                                                                                            <ITEM-45>
+                                                                                              <ITEM-46>
+                                                                                                <ITEM-47>
+                                                                                                  <ITEM-48>
+                                                                                                    <ITEM-49>
+                                                                                                      <ITEM-50>
+                                                                                                        <ITEM-51>
+                                                                                                          <ITEM-52>
+                                                                                                            <ITEM-53>
+                                                                                                              <ITEM-54>
+                                                                                                                <ITEM-55>
+                                                                                                                  <ITEM-56>
+                                                                                                                    <ITEM-57>
+                                                                                                                      <ITEM-58>
+                                                                                                                        <ITEM-59>
+                                                                                                                          <ITEM-60>
+                                                                                                                            <ITEM-61>
+                                                                                                                              <ITEM-62>
+                                                                                                                                <ITEM-63>
+                                                                                                                                  <ITEM-64>
+                                                                                                                                    <ITEM-65>
+                                                                                                                                    -->
+  </table>
+  <form class="form form-group" action="/form/save" method="post">
+    <div class="newPost">
+      <h3>Nova Versão</h3>
+        <input class="form-control" id="docName" type="text" name="docName" placeholder="Enter title here">
+      <div class="toolbar">
+        <button type="button" data-func="bold"><i class="fa fa-bold"></i></button>
+        <button type="button" data-func="italic"><i class="fa fa-italic"></i></button>
+        <button type="button\" data-func="underline"><i class="fa fa-underline"></i></button>
+        <button type="button\" data-func="justifyleft"><i class="fa fa-align-left"></i></button>
+        <button type="button\" data-func="justifycenter"><i class="fa fa-align-center"></i></button>
+        <button type="button\" data-func="justifyright"><i class="fa fa-align-right"></i></button>
+        <button type="button\" data-func="insertunorderedlist"><i class="fa fa-list-ul"></i></button>
+        <button type="button\" data-func="insertorderedlist"><i class="fa fa-list-ol"></i></button>
+        <div class="customSelect">
+          <select data-func="fontname">
+            <optgroup label="Serif Fonts">
+              <option value="Bree Serif">Bree Serif</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Palatino Linotype">Palatino Linotype</option>
+              <option value="Times New Roman">Times New Roman</option>
+            </optgroup>
+            <optgroup label="Sans Serif Fonts">
+              <option value="Arial">Arial</option>
+              <option value="Arial Black">Arial Black</option>
+              <option value="Asap" selected>Asap</option>
+              <option value="Comic Sans MS">Comic Sans MS</option>
+              <option value="Impact">Impact</option>
+              <option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+              <option value="Tahoma">Tahoma</option>
+              <option value="Trebuchet MS">Trebuchet MS</option>
+              <option value="Verdana">Verdana</option>
+            </optgroup>
+            <optgroup label="Monospace Fonts">
+              <option value="Courier New">Courier New</option>
+              <option value="Lucida Console">Lucida Console</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="customSelect">
+          <select data-func="formatblock">
+            <option value="h1">Heading 1</option>
+            <option value="h2">Heading 2</option>
+            <option value="h4">Subtitle</option>
+            <option value="p" selected>Paragraph</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div id="accessLink" class="editor" name="accessLink" contenteditable>
+        </div>
+      </div>
+      <div class="buttons">
+        <!--<button type="button\">save draft</button>-->
+        <button data-func="clear" type="button">clear</button>
+        <button type="submit">save</button>
+      </div>
+    </div>
+  </form>
+  <script>
+    $('.newPost button[data-func]').click(function () {
+      document.execCommand($(this).data('func'), false);
+    });
+
+    $('.newPost select[data-func]').change(function () {
+      var $value = $(this).find(':selected').val();
+      document.execCommand($(this).data('func'), false, $value);
+    });
+
+    if (typeof (Storage) !== "undefined") {
+      $('.editor').keypress(function () {
+        $(this).find('.saved').detach();
+      });
+      $('button[data-func="clear"]').click(function () {
+        $('.editor').html('');
+        localStorage.removeItem("wysiwyg");
+      });
+    }
+
+  </script>
+  <!-- partial -->
+
+  <style>
+    * {
+      box-sizing: border-box;
+      border-radius: 7px;
+    }
+
+    body {
+      background-color: #EBEBEB;
+    }
+
+    .input--main__style {
+      background-color: #00FF00;
+    }
+
+    .input--button {
+      font-weight: bold;
+      font-family: Arial;
+      font-size: medium;
+      border-color: transparent;
+      display: block;
+      margin: 0px auto;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .input--register {
+      display: inline;
+    }
+
+    input {
+      display: block;
+      border-radius: 7px;
+      padding: 10px;
+      border-style: solid;
+      border-color: lightgray;
+      color: black;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    form p {
+      text-align: initial;
+      display: inline;
+      margin-left: 15px;
+    }
+
+    .p--nomargin {
+      margin-left: 0px;
+      margin-right: 10px;
+    }
+  </style>
+</body>
+
+</html>
